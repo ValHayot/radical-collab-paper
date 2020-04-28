@@ -1,0 +1,87 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
+
+\title{RadicalSea: Improving data management in BigData pilot job applications on HPC}
+
+\author{\IEEEauthorblockN{1\textsuperscript{st} Given Name Surname}
+\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+\textit{name of organization (of Aff.)}\\
+City, Country \\
+email address or ORCID}
+\and
+\IEEEauthorblockN{2\textsuperscript{nd} Given Name Surname}
+\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+\textit{name of organization (of Aff.)}\\
+City, Country \\
+email address or ORCID}
+\and
+\IEEEauthorblockN{3\textsuperscript{rd} Given Name Surname}
+\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+\textit{name of organization (of Aff.)}\\
+City, Country \\
+email address or ORCID}
+\and
+\IEEEauthorblockN{4\textsuperscript{th} Given Name Surname}
+\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+\textit{name of organization (of Aff.)}\\
+City, Country \\
+email address or ORCID}
+\and
+\IEEEauthorblockN{5\textsuperscript{th} Given Name Surname}
+\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+\textit{name of organization (of Aff.)}\\
+City, Country \\
+email address or ORCID}
+\and
+\IEEEauthorblockN{6\textsuperscript{th} Given Name Surname}
+\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+\textit{name of organization (of Aff.)}\\
+City, Country \\
+email address or ORCID}
+}
+
+\maketitle
+
+\begin{abstract}
+\end{abstract}
+
+\begin{IEEEkeywords}
+\end{IEEEkeywords}
+
+\section{Introduction}
+\begin{itemize}
+\item Improving the performance of scientific big data applications is a growing concern
+\item Big Data frameworks and tools not instrumented for HPC (hpc relies on shared parallel storage rather than distributed storage, schedulers employed are not Big Data schedulers, need overlay clusters)
+\item HPC frameworks have been developed to addressed this (radical).
+\item performance in Big Data applications is constrained by data movement
+\item Shared filesystem i/o very costly, however users require data (sometimes including intermediate data) to be stored there for future access.
+\item Radical allows the offsetting of this cost by transferring intermediate data between nodes. Does not leverage local node's different storage layers and will not transfer the intermediate data back to shared filesystem.
+\item Sea is a datamanagement library, that, based on a list of user's storage preference will perform i/o on fastest available storage while asynchronously flushing all data to shared filesystem.
+\item sea and radical can be hooked together to create an efficient big data engine for HPC
+\item Goal: evaluate the added performance of sea with radical vs radical alone vs Spark on HPC using two scientific big data workflows (BigBrain + ??)
+\end{itemize}
+\section{Materials and Methods}
+\begin{itemize}
+\item two scientific workflows (big brain incrementation + ??)
+\item bigbrain 603GB
+\item our cluster, g5k??, compute canada??
+\end{itemize}
+\section{Results}
+\section{Conclusion}
+
+\section*{Acknowledgment}
+
+\section*{References}
+
+
+\end{document}
