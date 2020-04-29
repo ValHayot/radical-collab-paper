@@ -65,18 +65,23 @@ email address or ORCID}
 \item HPC frameworks have been developed to addressed this (radical).
 \item performance in Big Data applications is constrained by data movement
 \item Shared filesystem i/o very costly, however users require data (sometimes including intermediate data) to be stored there for future access.
+\item overlay filesystems improve performance while only temporarily increasing
+    storage bandwidth. Users have the flexibility to decide whether the overlay
+    will provide improved performance to their pipelines.
 \item Radical allows the offsetting of this cost by transferring intermediate data between nodes. Does not leverage local node's different storage layers and will not transfer the intermediate data back to shared filesystem.
-\item Sea is a datamanagement library, that, based on a list of user's storage preference will perform i/o on fastest available storage while asynchronously flushing all data to shared filesystem.
+\item Sea is a data management library, that, based on a list of user's storage preference will perform i/o on fastest available storage while asynchronously flushing all data to shared filesystem.
 \item sea and radical can be hooked together to create an efficient big data engine for HPC
+\item As RADICAL has knowledge of the pipeline internals, it can provide Sea with details on which data to ``pin'' to memory (through filename??)
+\item When combined, sea and radical pilot should provide performance that is competitive to that of Big Data engines.
 \item Goal: evaluate the added performance of sea with radical vs radical alone vs Spark on HPC using two scientific big data workflows (BigBrain + ??)
 \end{itemize}
 \section{Materials and Methods}
 \begin{itemize}
     \item{Radical Cybertools}
     \item{Sea}
-    \item{Infrastructure} \\our cluster, g5k??, compute canada??
-    \item{Datasets} \\ bigbrain 603GB + ??
-    \item{Experiments} \\ bb incrementation + ??
+    \item{Infrastructure} \\our cluster, BRIDGES
+    \item{Datasets} \\ bigbrain 603GB + Geo dataset
+    \item{Experiments} \\ bb incrementation + Geo pipeline
 \end{itemize}
 \section{Results}
 \section{Conclusion}
