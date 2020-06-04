@@ -91,9 +91,41 @@ are not Big Data schedulers, need overlay clusters)
 \begin{itemize}
     \item{Radical Cybertools}
     \item{Sea}
+       \\ - Sea is a library that attempts to mask read and write times of intermediary data to shared parallel
+        filesystems by leveraging available node-local storage whenever possible. 
+        \\ - In a config file, a user specifies a mount point (a directory for the application to interact with) and several sources
+        (when an application accesses a file/directory located within the mountpoint, they will actually be interfacing with one/all of the sources)
+        \\ - Sea leverages LD\_PRELOAD in order to intercept libc calls and redirect them to the appropriate sources. This method has limitations in that
+        it will not work with statically-linked libraries or applications that do not interface with libc.
+        \\ - Although Sea would not have the flexibility of filesystems such as FUSE-based systems, its performance is expected to be significantly faster than
+    a FUSE-based implementation. (maybe more intro. should also discuss other LD\_PRELOAD projects (e.g. xtreemfs) , union mounts (unionfs), other popular examples that leverage LD\_PRELOAD-ing(fakechroot), big data fs (HDFS, alluxio)))
+        \\ - The config file will also specific a source hierarchy such that Sea will attempt to perform I/O at the top of the hierarchy whenever possible,
+        moving down the hierarchy as the top sources get filled up. Fast filesystems, such as tmpfs, should be located at the top of the hierarchy, whereas slower
+        fs, such as shared parallel fs should be located at the bottom. 
+        \\ - The ``slowest'' filesystem will be the one in while all intermediary data is materialized to.
+        \\ - In order to free space at the top of the hierarchy, flusher and eviction threads will be started by Sea. For now, implement a simple LRU-based policy. (Ideally, flusher tasks will coincide with compute tasks such that flushing time does not impact I/O)
+        \\ - All data is evicted to permanent storage before node can be relinquished
+        \\ - Sea brings added performance to workflows with non-negligible compute time, as the flush time to Lustre will not be successfully masked in strictly data intensive applications.
+
+    \item{Radical-Sea Interface}
+        \\ - Standalone, Sea can only operate on a single node. To leverage Sea in a distributed environment, Sea needs to be launched in all nodes started by the
+        resource manager.
+        \\ - RADICAL can ensure that Sea is running within each allocated node prior to task execution
+        \\ - data-locality needs to be preserved to benefit from Sea optimizations. In the instance where a Sea-generated file has not yet been flushed to shared storage, RADICAL-PILOT can issue a notice to the SEA flushers (touchfile perhaps?) to force flushing.
+        \\ RADICAL can also provide to SEA the DAG of dependencies such that SEA can avoid evicting files which will be reused.
     \item{Infrastructure} \\our cluster, BRIDGES
     \item{Datasets} \\ bigbrain 603GB + Geo dataset
-    \item{Experiments} \\ bb incrementation + Geo pipeline
+    \item{Experiments}
+        \\ - Experiment 1 - Synthetic pipeline leveraging real data (BigBrain/Neuroimaging). The goal of this experiment is to determine
+            where RadicalSea ranks in comparison to the worst case (writing to shared fs) and best case (writing to memory only) on
+            a data intensive pipeline operating on a very large dataset. 
+            We will increase the amount of intermediary data produced from 1 - 10 to see how RADICALSea will perform with increasing amount of data generated.
+            We are not necessarily interested in the read/write time of individual
+        \\      - 1.1 Radical pipeline + shared fs
+        \\      - 1.2 Radical pipeline + local disk (or mem if there's enough memory)
+        \\      - 1.3 Spark implementation
+        \\      - 1.4 RadicalSea
+        \\
 \end{itemize}
 \section{Results}
 \section{Conclusion}
