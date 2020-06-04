@@ -132,12 +132,17 @@ are not Big Data schedulers, need overlay clusters)
             where RadicalSea ranks in comparison to the worst case (writing to shared fs) and best case (writing to memory only) on
             a data intensive pipeline operating on a very large dataset. 
             We will increase the amount of intermediary data produced from 1 - 10 to see how RADICALSea will perform with increasing amount of data generated.
-            We are not necessarily interested in the read/write time of individual
+            We are not necessarily interested in the read/write time of individual i/o operations, but moreso at the pipeline task level (e.g. is flushing to lustre occurring at
+            the same time as compute therefore being masked or is it actually now worse than writing directly to shared fs.
             \item Radical pipline + shared fs
             \item Radical pipeline + local disk(or mem)
             \item Spark implementation
             \item Radical Sea
     \end{itemize}
+    \subsubsection{Experiment 2 - Iceberg data}
+    \begin{itemize}
+        \item Real pipeline and real data experiment. Here we are looking at how RadicalSea performs with variable task duration. Also interested in makespan of application/percentage of lustre  i/o being masked and how that compares to worst and best case.
+        \end{itemize}
 
 \section{Results}
 \section{Conclusion}
